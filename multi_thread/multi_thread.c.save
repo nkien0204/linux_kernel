@@ -1,0 +1,21 @@
+#include <pthread.h>
+#include <stdio.h>
+#include <string.h>
+
+void * foo (void * arg) {
+	printf ("This is thread %s\n", (char *)arg); 
+}
+
+int main () {
+	pthread_t thread1;
+	pthread_t thread2;
+	char a[100];
+	memset (a, 0, sizeof (a));
+	pthread_create (&thread1, NULL, foo, "thread11");
+	pthread_create (&thread2, NULL, foo, "thread22");
+	pthread_join (thread1, (void*)&a);
+	printf ("a: %s\n",a); 
+	pthread_join (thread2, (void*)&a);
+	printf ("a: %s\n",a); 
+	return 0;
+}
